@@ -62,7 +62,7 @@ void Detector::locate(Mat frame) {
     drawKeypoints( blob, keypoints, im_with_keypoints, Scalar(0,0,255), DrawMatchesFlags::DRAW_RICH_KEYPOINTS );
 
     // Show blobs
-    imshow("keypoints", im_with_keypoints );
+    ///imshow("keypoints", im_with_keypoints );
 
     //Debug print
     for( int i = 0 ; i < keypoints.size(); i++)
@@ -149,36 +149,37 @@ vector<Point2d> Detector::detect(Mat frame){
     // -------- gray scaling ----------
     Mat BW1;
     cvtColor(frame, BW1, COLOR_BGR2GRAY);
-    //cv::threshold(img, img, 127, 255, cv::THRESH_BINARY);
-    cv::Mat skel(BW1.size(), CV_8UC1, cv::Scalar(0));
-    cv::Mat temp;
-    cv::Mat eroded;
+    // -------- Skeleton ---------- //
+//    cv::Mat skel(BW1.size(), CV_8UC1, cv::Scalar(0));
+//    cv::Mat temp;
+//    cv::Mat eroded;
+//
+//    cv::Mat element = cv::getStructuringElement(cv::MORPH_CROSS, cv::Size(5, 5));
+//    bool done;
+//    int iterations=0;
+//    do
+//    {
+//        erode(BW1, eroded, element);
+//        dilate(eroded, temp, element);
+//        subtract(BW1, temp, temp);
+//        bitwise_or(skel, temp, skel);
+//        eroded.copyTo(BW1);
+//
+//        done = (countNonZero(BW1) == 0);
+//        iterations++;
+//
+//    } while (!done && (iterations < 25));
+//    //------- Dilate -------------//
+//    Mat BW1_5;
+//    dilate(skel,BW1_5,element);
+//    imshow("bw1.5: skeleton", BW1_5);
 
-    cv::Mat element = cv::getStructuringElement(cv::MORPH_CROSS, cv::Size(3, 3));
-    bool done;
-    int iterations=0;
-    do
-    {
-        erode(BW1, eroded, element);
-        dilate(eroded, temp, element);
-        subtract(BW1, temp, temp);
-        bitwise_or(skel, temp, skel);
-        eroded.copyTo(BW1);
-
-        done = (countNonZero(BW1) == 0);
-        iterations++;
-
-    } while (!done && (iterations < 25));
-    //------- Dilate -------------//
-    Mat BW1_5;
-    dilate(skel,BW1_5,element);
-    imshow("bw1.5: skeleton", BW1_5);
     //-------Hough lines----------//
     Mat HLT1 = frame;
-//    Canny(BW1,BW1_5,200, 300, 3);
-//    imshow("bw1.5: Canny", BW1_5);
+    Canny(BW1,frame,50, 300, 3);
+    imshow("bw1.5: Canny", frame);
     vector<Vec4i> lines;
-    HoughLinesP( BW1_5, lines, 1, CV_PI/360, 50, 50, 10 );
+    HoughLinesP( frame, lines, 1, CV_PI/360, 50, 50, 10 );
     /*
     vector<Vec4i> lines;
     HoughLinesP(dst, lines, 1, CV_PI/180, 50, 50, 10 );
@@ -195,12 +196,11 @@ vector<Point2d> Detector::detect(Mat frame){
     {
         line(HLT1, Point(i[0], i[1]), Point(i[2], i[3]), Scalar(0, 0, 255), 2, LINE_AA );
     }
-    imshow("bw1.5: Hough lines", HLT1);
     Rect boundingBox = lines2boundingbox(frame, lines);
 
     //cout << "HLT1 \t box: " << 1 << "\t Xmin, Xmax: (" << Xmin << "," << Xmax << ") \t Ymin,Ymax: (" << Ymin << "," << Ymax  << ")\n";
-    rectangle(HLT1, boundingBox, Scalar(0, 255, 255, 125 ));
-    imshow("bw4: Hough lines", HLT1);
+    rectangle(HLT1, boundingBox, Scalar(255, 0, 0));
+    //imshow("bw4: Hough lines", HLT1);
     //Mat& img, Rect rec, const Scalar& color,
 
     //Group overlaying lines together
@@ -248,10 +248,6 @@ vector<Point2d> Detector::detect(Mat frame){
             //circle(BW5,Point2d(corelines[i][2], corelines[i][3]), 6, Scalar(255,255,0),2);
             centerpoints.emplace_back(corelines[i][2], corelines[i][3]);
         }
-        
-        
-
-
         line( BW5, Point(corelines[i][0], corelines[i][1]),
             Point(corelines[i][2], corelines[i][3]), Scalar(0,255,0), 2, 8 );
     }
@@ -277,7 +273,6 @@ vector<Point2d> Detector::detect(Mat frame){
         circle(BW5,Point2d(output[i].x, output[i].y), 6, Scalar(255,0,0),2);
     }
 
-    imshow("Simple lines", BW5);
     return output;
 
 }

@@ -13,15 +13,15 @@ int main(int argc, const char** argv)
     // Declare the output variables
     Detector d;
     Mat frame;
-    auto video = false;
+    auto video = true;
 
     //-------Static Image-------//
     if (video == false){
-        const char* default_file = "images/4.png";
+        const char* default_file = "images/6.jpg";
         const char* filename = argc >=2 ? argv[1] : default_file;
         // Loads an image
         frame = imread( samples::findFile( filename ), IMREAD_COLOR );
-        cv::imshow("input", frame);
+        //cv::imshow("input", frame);
         // Check if image is loaded fine
         if(frame.empty()){
             printf(" Error opening image\n");
@@ -31,14 +31,14 @@ int main(int argc, const char** argv)
         //Run the detector (detect houghlines)
         vector<Point2d> turbinePoints;
         turbinePoints = d.detect(frame);
-        d.locate(frame);
+        //d.locate(frame);
         cv::imshow("Output", frame);
     }
 
 
     //-------Video Feed-------//
     if (video == true){
-        VideoCapture cap("videos/1.mp4"); // open the default camera
+        VideoCapture cap("videos/frozen.mp4"); // open the default camera
         if(!cap.isOpened()) { // check if we succeeded
             std::cout << "cannot open camera "<< std::endl;
             return -1;
@@ -67,9 +67,7 @@ int main(int argc, const char** argv)
                 break;
         }
     }
-
-
     // Wait and Exit
-    waitKey();
+    waitKey(0);
     return 0;
 }

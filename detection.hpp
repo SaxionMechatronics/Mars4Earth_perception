@@ -95,6 +95,7 @@ class Detector
     // Output rotation and translation
     cv::Mat rotation_vector; // Rotation in axis-angle form
     cv::Mat translation_vector;
+    vector<Vec4i> lines;
 
     //dummy var
     string name;
@@ -117,5 +118,7 @@ class Detector
     //[100% - Finished]
     //Groups lines based on size and angle
     vector<Vec4i> lines2points( vector<Vec4i> lines );
+
+    void blade(Mat frame, vector<Vec4i> lines);
 
 };

@@ -151,7 +151,7 @@ vector<Point2d> Detector::detect(Mat frame){
     //-------Canny----------//
     Mat cannyT, gBlur, mBlur;
     GaussianBlur(BW,gBlur, Size(3, 3), 5 );
-    medianBlur ( gBlur, mBlur, 5 );
+    medianBlur (gBlur, mBlur, 5);
     Canny(mBlur,cannyT,75, 150, 3, true);
     imshow("bw1.5: Canny", cannyT);
     //-------Hough lines----------//
@@ -233,38 +233,41 @@ vector<Point2d> Detector::detect(Mat frame){
 void Detector::blade(Mat frame, vector<Vec4i> lines){
     vector<int> angle;
     float x1, y1, x2, y2;
-    for (auto l : lines){
+    for (auto l : lines) {
         x1 = l[0];
         x2 = l[2];
         y1 = l[1];
         y2 = l[3];
 
         Point p1, p2;
-        p1=Point(x1, y1);
-        p2=Point(x2, y2);
+        p1 = Point(x1, x2);
+        p2 = Point(y1, y2);
         //calculate angle in radian,  if you need it in degrees just do angle * 180 / PI
         angle.push_back(atan2(p1.y - p2.y, p1.x - p2.x) * 360 / CV_PI);
-        for(size_t i = 0; i < angle.size(); i++){
-            if (angle[i] < 0){
+        for (size_t i = 0; i < angle.size(); i++) {
+            if (angle[i] < 0) {
                 //replace_if(angle.begin(),angle.end(), angle[i] < 0, atan2(p2.y - p1.y, p2.x - p1.x) * 360 / CV_PI);
-                angle[i] = (atan2(p2.y - p1.y, p2.x - p1.x) * 360 / CV_PI);
+                angle[i] = atan2(p2.y - p1.y, p2.x - p1.x) * 360 / CV_PI;
                 i++;
             }
-
         }
-        for(int i : angle){
-            int temp;
-            temp = i;
-            for(int j : angle){
-                int x,y;
-                x = temp - j;
-                y = temp + j;
-                cout << x << " : " << y << " : " << temp << endl;
-                if(x > 110 && x < 130 || y > 110 && y < 130){
-                    cout << "is blade: " << x << " : " << y << " : " << temp << endl;
-                    line(frame, Point(x1, y1), Point(x2, y2), Scalar(255, 0, 0), 1, LINE_AA );
+        vector<Vec4i> corelines = lines2points(lines);
+        for (auto &coreline : corelines) {
+            cout << coreline << endl;
+            for (size_t i = 0; i < angle.size(); i++) {
+                int temp;
+                temp = angle[i];
+                for (size_t j = 0; j < angle.size(); j++) {
+                    int x, y;
+                    x = temp - j;
+                    y = temp + j;
+                    //cout << x << " : " << y << " : " << temp << endl;
+                    if (x > 110 && x < 130 || y > 110 && y < 130) {
+                        //cout << "is blade: " << x << " : " << y << " : " << temp << endl;
+                        line(frame, Point(coreline[0], coreline[1]), Point(coreline[2], coreline[3]),
+                             Scalar(255, 0, 0), 1, LINE_AA);
+                    }
                 }
-
             }
         }
     }
@@ -344,21 +347,20 @@ vector<Vec4i> Detector::lines2points( vector<Vec4i> lines ){
             
             //Save whether x1 is bigger than x2. Could also be done with the slope
             if(lines[i][0] < lines[i][2]){
-                big_x = 1;
+                big_x = true;
             }
             else{
-                big_x = 0;
+                big_x = false;
             }
 
             if(lines[i][1] < lines[i][3]){
-                big_y = 1;
+                big_y = true;
             }
             else{
-                big_y = 0;
+                big_y = false;
             }
 
         }
-
         //Determine the max and minima of the array
         auto x_min_value = *std::min_element(x.begin(),x.end());
         auto x_max_value = *std::max_element(x.begin(),x.end());

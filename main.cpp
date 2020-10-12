@@ -13,7 +13,7 @@ int main(int argc, const char** argv)
     // Declare the output variables
     Detector d;
     Mat frame;
-    auto video = true;
+    auto video = false;
 
     //-------Static Image-------//
     if (video == false){

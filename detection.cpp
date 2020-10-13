@@ -167,7 +167,7 @@ vector<Point2d> Detector::detect(Mat frame) {
     maxLineGap: The maximum gap between two points to be considered in the same line.  */
     HoughLinesP(cannyT, lines, 1, CV_PI / 360, 50, 50, 5);
     for (auto &i : lines) {
-        line(frame, Point(i[0], i[1]), Point(i[2], i[3]), Scalar(0, 0, 255), 2, LINE_AA);
+        //line(frame, Point(i[0], i[1]), Point(i[2], i[3]), Scalar(0, 0, 255), 2, LINE_AA);
     }
     blade(frame, lines);
     Rect boundingBox = lines2boundingbox(frame, lines);

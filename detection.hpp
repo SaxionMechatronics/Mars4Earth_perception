@@ -25,9 +25,7 @@
 //Namespace decl.
 using namespace std; 
 using namespace cv;
-using namespace cv::xfeatures2d; 
-
-
+using namespace cv::xfeatures2d;
 
 /*
   @Class: Detector
@@ -57,27 +55,6 @@ class Detector
     //=================== Initializer ===================
     public:
     Detector();
-    
-
-    //================ Private variables ================
-    private:    
-
-    //Used in detect()
-    int  bw2_Treshold;    
-    int  bw4_Rho;    
-    int  bw4_Theta;   
-    int  bw4_Treshold;  
-    int  bw4_minLinLength; 
-    int  bw4_maxLineGap;
-
-    //Used in locate()
-    static const int max_value_H = 360/2;
-    static const int max_value = 255;
-    String window_capture_name;
-    String window_detection_name;
-    int low_H,  low_S,  low_V;
-    int high_H, high_S, high_V;
-    
 
     //================ Private functions ===============
     private: 
@@ -118,6 +95,7 @@ class Detector
     // Output rotation and translation
     cv::Mat rotation_vector; // Rotation in axis-angle form
     cv::Mat translation_vector;
+    vector<Vec4i> lines;
 
     //dummy var
     string name;
@@ -140,5 +118,7 @@ class Detector
     //[100% - Finished]
     //Groups lines based on size and angle
     vector<Vec4i> lines2points( vector<Vec4i> lines );
+
+    void blade(Mat frame, vector<Vec4i> lines);
 
 };

@@ -122,40 +122,26 @@ void Detector::locate(Mat frame) {
 }
 
 vector<Point2d> Detector::detect(Mat frame) {
-    // -------- gray scaling ----------
-    Mat BW;
-    cvtColor(frame, BW, COLOR_BGR2GRAY);
-//    // -------- Skeleton ---------- //
-//    cv::Mat skel(BW.size(), CV_8UC1, cv::Scalar(0));
-//    cv::Mat temp;
-//    cv::Mat eroded;
-//
-//    cv::Mat element = cv::getStructuringElement(cv::MORPH_CROSS, cv::Size(5, 5));
-//    bool done;
-//    int iterations=0;
-//    do
-//    {
-//        erode(BW, eroded, element);
-//        dilate(eroded, temp, element);
-//        subtract(BW, temp, temp);
-//        bitwise_or(skel, temp, skel);
-//        eroded.copyTo(BW);
-//
-//        done = (countNonZero(BW) == 0);
-//        iterations++;
-//
-//    } while (!done && (iterations < 25));
-//    //------- Dilate -------------//
-//    Mat cannyT;
-//    dilate(skel,cannyT,element);
-//    imshow("bw1.5: skeleton", cannyT);
+    Mat HSV, mask, mask2, outputHSV, final;
+    // Convert from BGR to HSV colorspace
+    cv::cvtColor(frame,HSV, COLOR_BGR2HSV);
 
+    int low_H = 0, low_S = 20, low_V = 20;
+    int high_H = 90, high_S = 255, high_V = 255;
+    // Detect the object based on HSV Range Values
+    inRange(HSV, Scalar(low_H, low_S, low_V), Scalar(high_H, high_S, high_V), mask);
+
+    // creating an inverted mask to segment out the cloth from the frame
+    bitwise_and(frame,frame,outputHSV,mask = mask);
+    cv::imshow("HSV_filter", outputHSV);
+    cv::absdiff(frame,outputHSV,final);
     //-------Canny----------//
     Mat cannyT, gBlur, mBlur;
-    GaussianBlur(BW, gBlur, Size(3, 3), 5);
-    medianBlur(gBlur, mBlur, 5);
-    Canny(mBlur, cannyT, 75, 150, 3, true);
-    imshow("bw1.5: Canny", cannyT);
+    GaussianBlur(final, gBlur, Size(5, 5), 5);
+    medianBlur(gBlur, mBlur, 7);
+    cv::imshow("test", mBlur);
+    Canny(mBlur, cannyT, 50, 100, 3, true);
+    imshow("Canny", cannyT);
     //-------Hough lines----------//
     /*
     dst: Output of the edge detector. It should be a grayscale image (although in fact it is a binary one)
@@ -165,9 +151,9 @@ vector<Point2d> Detector::detect(Mat frame) {
     threshold: The minimum number of intersections to “detect” a line
     minLinLength: The minimum number of points that can form a line. Lines with less than this number of points are disregarded.
     maxLineGap: The maximum gap between two points to be considered in the same line.  */
-    HoughLinesP(cannyT, lines, 1, CV_PI / 360, 50, 50, 5);
+    HoughLinesP(cannyT, lines, 1, CV_PI / 360, 40, 100, 10);
     for (auto &i : lines) {
-        //line(frame, Point(i[0], i[1]), Point(i[2], i[3]), Scalar(0, 0, 255), 2, LINE_AA);
+        line(frame, Point(i[0], i[1]), Point(i[2], i[3]), Scalar(0, 0, 255), 2, LINE_AA);
     }
     blade(frame, lines);
     Rect boundingBox = lines2boundingbox(frame, lines);
@@ -178,7 +164,7 @@ vector<Point2d> Detector::detect(Mat frame) {
     //Mat& img, Rect rec, const Scalar& color,
 
     //Group overlaying lines together
-    ///vector<Vec4i> corelines = lines2points(lines);
+    vector<Vec4i> corelines = lines2points(lines);
 
     //----- Fabricate points for the locate alg. -----------//
     Size s = frame.size();
@@ -243,8 +229,8 @@ void Detector::blade(Mat frame, vector<Vec4i> lines) {
         y2 = l[3];
 
         Point p1, p2;
-        p1 = Point(x1, x2);
-        p2 = Point(y1, y2);
+        p1 = Point(x1, y1);
+        p2 = Point(x2, y2);
         //calculate angle in radian,  if you need it in degrees just do angle * 180 / PI
         angle.push_back(atan2(p1.y - p2.y, p1.x - p2.x) * 360 / CV_PI);
         for (size_t i = 0; i < angle.size(); i++) {
@@ -252,16 +238,17 @@ void Detector::blade(Mat frame, vector<Vec4i> lines) {
                 angle[i] = atan2(p2.y - p1.y, p2.x - p1.x) * 360 / CV_PI;
             }
         }
-
         for (size_t i = 0; i < angle.size(); i++) {
             int temp;
             temp = angle[i];
+            //cout << angle[i] << endl;
             for (size_t j = 0; j < angle.size(); j++) {
                 int x, y;
-                x = temp - j;
-                y = temp + j;
-                //cout << x << " : " << y << " : " << temp << endl;
-                if (x > 110 && x < 130 || y > 110 && y < 130) {
+                x = temp + angle[j];
+                y = temp - angle[j];
+                cout << x << " : " << y << " : " << temp << " : " << angle[j] << endl;
+                if (x > 110 && x < 150 || y > 110 && y < 150 ||
+                        x > 210 && x < 260 || y > 210 && y < 260) {
                     //cout << "is blade: " << x << " : " << y << " : " << temp << endl;
                     line(frame, Point(x1, y1), Point(x2, y2), Scalar(255, 0, 0), 1, LINE_AA);
                 }

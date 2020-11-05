@@ -17,7 +17,7 @@ int main(int argc, const char** argv)
 
     //-------Static Image-------//
     if (video == false){
-        const char* default_file = "images/6.jpg";
+        const char* default_file = "images/20.jpg";
         const char* filename = argc >=2 ? argv[1] : default_file;
         // Loads an image
         frame = imread( samples::findFile( filename ), IMREAD_COLOR );
@@ -38,7 +38,7 @@ int main(int argc, const char** argv)
 
     //-------Video Feed-------//
     if (video == true){
-        VideoCapture cap("videos/frozen.mp4"); // open the default camera
+        VideoCapture cap("videos/1.mp4"); // open the default camera
         if(!cap.isOpened()) { // check if we succeeded
             std::cout << "cannot open camera "<< std::endl;
             return -1;

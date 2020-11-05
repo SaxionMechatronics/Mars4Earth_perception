@@ -29,16 +29,12 @@ opencv2/calib3d.hpp
 -
 
 /home/wytse/CLionProjects/windturbine/main.cpp
-cstdio
--
 iostream
 -
-opencv2/opencv.hpp
-/home/wytse/CLionProjects/windturbine/opencv2/opencv.hpp
 opencv2/imgcodecs.hpp
-/home/wytse/CLionProjects/windturbine/opencv2/imgcodecs.hpp
+-
 opencv2/highgui.hpp
-/home/wytse/CLionProjects/windturbine/opencv2/highgui.hpp
+-
 detection.hpp
 /home/wytse/CLionProjects/windturbine/detection.hpp
 

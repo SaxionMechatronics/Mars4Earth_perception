@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/wytse/CLionProjects/windturbine/detection.cpp" "/home/wytse/CLionProjects/windturbine/cmake-build-debug/CMakeFiles/Detection.dir/detection.cpp.o"
-  "/home/wytse/CLionProjects/windturbine/main.cpp" "/home/wytse/CLionProjects/windturbine/cmake-build-debug/CMakeFiles/Detection.dir/main.cpp.o"
+  "/home/wytse/project/windturbine/detection.cpp" "/home/wytse/project/windturbine/cmake-build-debug/CMakeFiles/Detection.dir/detection.cpp.o"
+  "/home/wytse/project/windturbine/main.cpp" "/home/wytse/project/windturbine/cmake-build-debug/CMakeFiles/Detection.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

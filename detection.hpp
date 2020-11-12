@@ -32,6 +32,10 @@ class Detector
 
     //================ Public variables ================
     public:
+    int apertureSize;
+    int houghThreshold;
+    int houghMinLength;
+    int houghMaxLineGap;
     vector<Vec4i> lines;
 
     //================ Public functions ================

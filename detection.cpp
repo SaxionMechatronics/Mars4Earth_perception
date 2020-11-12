@@ -12,7 +12,12 @@ using namespace std;
 using namespace cv;
 using namespace cv::xfeatures2d;
 
-Detector::Detector() = default;
+Detector::Detector() {
+    apertureSize = 3;
+    houghThreshold = 40;
+    houghMinLength = 100;
+    houghMaxLineGap = 10;
+}
 
 void Detector::detect(Mat frame) {
     //-------Masking with HSV----------//
@@ -32,7 +37,7 @@ void Detector::detect(Mat frame) {
     Mat cannyT, gBlur, mBlur;
     GaussianBlur(HSVoutput, gBlur, Size(5, 5), 5);
     medianBlur(gBlur, mBlur, 7);
-    Canny(mBlur, cannyT, 50, 100, 3, true);
+    Canny(mBlur, cannyT, 50, 100, apertureSize, true);
     //imshow("Canny", cannyT);
     //-------Hough lines----------//
     /*
@@ -43,7 +48,7 @@ void Detector::detect(Mat frame) {
     threshold: The minimum number of intersections to “detect” a line
     minLinLength: The minimum number of points that can form a line. Lines with less than this number of points are disregarded.
     maxLineGap: The maximum gap between two points to be considered in the same line.  */
-    HoughLinesP(cannyT, lines, 1, CV_PI / 360, 40, 100, 10);
+    HoughLinesP(cannyT, lines, 1, CV_PI / 360, houghThreshold, houghMinLength, houghMaxLineGap);
     for (auto &i : lines) {
         line(frame, Point(i[0], i[1]), Point(i[2], i[3]), Scalar(0, 0, 255), 2, LINE_AA);
     }
@@ -78,7 +83,7 @@ void Detector::blade(Mat frame, vector<Vec4i> lines) {
                 int x, y;
                 x = temp + j;
                 y = temp - j;
-                if (x > 110 && x < 150 || y > 110 && y < 150 ||
+                if (x > 110 && x < 130 || y > 110 && y < 130 ||
                         x > 210 && x < 260 || y > 210 && y < 260) {
                     //cout << "is blade: " << x << " : " << y << " : " << temp << endl;
                     line(frame, Point(x1, y1), Point(x2, y2), Scalar(255, 0, 0), 1, LINE_AA);

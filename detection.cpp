@@ -73,7 +73,15 @@ void Detector::blade(Mat frame, vector<Vec4i> lines) {
         angle.push_back(atan2(p1.y - p2.y, p1.x - p2.x) * 360 / CV_PI);
         for (int & i : angle) {
             if (i < 0) {
-                i = atan2(p2.y - p1.y, p2.x - p1.x) * 360 / CV_PI;
+                int holdy;
+                int holdx;
+                holdy = p1.y;
+                p1.y = p2.y;
+                p2.y = holdy;
+                holdx = p1.x;
+                p1.x = p2.x;
+                p2.x = holdx;
+                i = atan2(p1.y - p2.y, p1.x - p2.x) * 360 / CV_PI;
             }
         }
         for (size_t i = 0; i < angle.size(); i++) {
@@ -85,7 +93,7 @@ void Detector::blade(Mat frame, vector<Vec4i> lines) {
                 y = temp - j;
                 if (x > 110 && x < 130 || y > 110 && y < 130 ||
                         x > 210 && x < 260 || y > 210 && y < 260) {
-                    //cout << "is blade: " << x << " : " << y << " : " << temp << endl;
+                    cout << "is blade: " << p1.x << " " << p1.y << endl;
                     line(frame, Point(x1, y1), Point(x2, y2), Scalar(255, 0, 0), 1, LINE_AA);
                 }
             }

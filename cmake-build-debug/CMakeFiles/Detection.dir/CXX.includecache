@@ -32,16 +32,6 @@ opencv2/opencv.hpp
 opencv2/calib3d.hpp
 -
 
-/home/wytse/project/windturbine/main.cpp
-iostream
--
-opencv2/imgcodecs.hpp
--
-opencv2/highgui.hpp
--
-detection.hpp
-/home/wytse/project/windturbine/detection.hpp
-
 /usr/local/include/opencv4/opencv2/calib3d.hpp
 opencv2/core.hpp
 /usr/local/include/opencv4/opencv2/opencv2/core.hpp

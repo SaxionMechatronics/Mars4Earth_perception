@@ -15,7 +15,7 @@ int main(int, const char **) {
     VideoCapture cap; // open the default camera
     std::cout << "start" << std::endl;
     // open the default camera using default API
-    cap.open(0);
+    cap.open(2);
     // OR advance usage: select any API backend
 //    int deviceID = 1;             // 0 = open default camera
 //    int apiID = cv::CAP_ANY;      // 0 = autodetect default API

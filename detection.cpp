@@ -14,9 +14,9 @@ using namespace cv::xfeatures2d;
 
 Detector::Detector() {
     apertureSize = 3;
-    houghThreshold = 40;
+    houghThreshold = 50;
     houghMinLength = 100;
-    houghMaxLineGap = 10;
+    houghMaxLineGap = 15;
 }
 
 void Detector::detect(Mat frame) {
@@ -25,12 +25,12 @@ void Detector::detect(Mat frame) {
     // Convert from BGR to HSV colorspace
     cv::cvtColor(frame,HSV, COLOR_BGR2HSV);
     // Create a mask (this one takes all the brown and green)
-    int low_H = 0, low_S = 20, low_V = 20;
-    int high_H = 90, high_S = 255, high_V = 255;
+    int low_H = 85, low_S = 0, low_V = 0;
+    int high_H = 120, high_S = 255, high_V = 255;
     // Detect the object based on HSV Range Values
     inRange(HSV, Scalar(low_H, low_S, low_V), Scalar(high_H, high_S, high_V), mask);
     // segment out the background
-    bitwise_and(frame, frame, HSVmasked, mask = mask);
+    bitwise_or(frame, frame, HSVmasked, mask = mask);
     cv::imshow("HSV_filter", HSVmasked);
     cv::absdiff(frame, HSVmasked, HSVoutput);
     //-------Canny----------//
@@ -38,7 +38,7 @@ void Detector::detect(Mat frame) {
     GaussianBlur(HSVoutput, gBlur, Size(5, 5), 5);
     medianBlur(gBlur, mBlur, 7);
     Canny(mBlur, cannyT, 50, 100, apertureSize, true);
-    //imshow("Canny", cannyT);
+    imshow("Canny", cannyT);
     //-------Hough lines----------//
     /*
     dst: Output of the edge detector. It should be a grayscale image (although in fact it is a binary one)

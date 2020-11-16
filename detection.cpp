@@ -8,7 +8,7 @@
 //class header
 #include "detection.hpp"
 //Namespace
-using namespace std;
+//using namespace std;
 using namespace cv;
 using namespace cv::xfeatures2d;
 
@@ -21,22 +21,22 @@ Detector::Detector() {
 
 void Detector::detect(Mat frame) {
     //-------Masking with HSV----------//
-    Mat HSV, mask, HSVmasked, HSVoutput;
+    Mat HSV, mask, HSVmasked;
     // Convert from BGR to HSV colorspace
     cv::cvtColor(frame,HSV, COLOR_BGR2HSV);
     // Create a mask (this one takes all the brown and green)
-    int low_H = 85, low_S = 0, low_V = 0;
-    int high_H = 120, high_S = 255, high_V = 255;
+    int low_H = 85, low_S = 10, low_V = 10;
+    int high_H = 115, high_S = 255, high_V = 255;
     // Detect the object based on HSV Range Values
     inRange(HSV, Scalar(low_H, low_S, low_V), Scalar(high_H, high_S, high_V), mask);
     // segment out the background
     bitwise_or(frame, frame, HSVmasked, mask = mask);
     cv::imshow("HSV_filter", HSVmasked);
-    cv::absdiff(frame, HSVmasked, HSVoutput);
     //-------Canny----------//
     Mat cannyT, gBlur, mBlur;
-    GaussianBlur(HSVoutput, gBlur, Size(5, 5), 5);
+    GaussianBlur(HSVmasked, gBlur, Size(5, 5), 5);
     medianBlur(gBlur, mBlur, 7);
+    imshow("Gaussian & median blur", mBlur);
     Canny(mBlur, cannyT, 50, 100, apertureSize, true);
     imshow("Canny", cannyT);
     //-------Hough lines----------//
@@ -91,9 +91,8 @@ void Detector::blade(Mat frame, vector<Vec4i> lines) {
                 int x, y;
                 x = temp + j;
                 y = temp - j;
-                if (x > 110 && x < 130 || y > 110 && y < 130 ||
-                        x > 210 && x < 260 || y > 210 && y < 260) {
-                    cout << "is blade: " << p1.x << " " << p1.y << endl;
+                if (x > 110 && x < 130 || y > 110 && y < 130) {
+                    std::cout << "is blade: " << p1.x << " " << p1.y << std::endl;
                     line(frame, Point(x1, y1), Point(x2, y2), Scalar(255, 0, 0), 1, LINE_AA);
                 }
             }

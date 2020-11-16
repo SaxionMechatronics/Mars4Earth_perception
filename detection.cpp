@@ -23,10 +23,10 @@ void Detector::detect(Mat frame) {
     //-------Masking with HSV----------//
     Mat HSV, mask, HSVmasked;
     // Convert from BGR to HSV colorspace
-    cv::cvtColor(frame,HSV, COLOR_BGR2HSV);
+    cv::cvtColor(frame, HSV, COLOR_BGR2HSV);
     // Create a mask (this one takes all the brown and green)
-    int low_H = 85, low_S = 10, low_V = 10;
-    int high_H = 115, high_S = 255, high_V = 255;
+    int low_H = 85, low_S = 50, low_V = 50;
+    int high_H = 120, high_S = 255, high_V = 255;
     // Detect the object based on HSV Range Values
     inRange(HSV, Scalar(low_H, low_S, low_V), Scalar(high_H, high_S, high_V), mask);
     // segment out the background
@@ -71,7 +71,7 @@ void Detector::blade(Mat frame, vector<Vec4i> lines) {
         p2 = Point(x2, y2);
         //calculate angle in radian, if you need it in degrees just do angle * 180 / PI
         angle.push_back(atan2(p1.y - p2.y, p1.x - p2.x) * 360 / CV_PI);
-        for (int & i : angle) {
+        for (int &i : angle) {
             if (i < 0) {
                 int holdy;
                 int holdx;
@@ -85,13 +85,13 @@ void Detector::blade(Mat frame, vector<Vec4i> lines) {
             }
         }
         for (size_t i = 0; i < angle.size(); i++) {
-            int temp;
-            temp = angle[i];
-            for (int j : angle) {
-                int x, y;
-                x = temp + j;
-                y = temp - j;
-                if (x > 110 && x < 130 || y > 110 && y < 130) {
+            int startingAngle;
+            startingAngle = angle[i];
+            for (int currentAngle : angle) {
+                int upperLimit, lowerLimit;
+                upperLimit = startingAngle + currentAngle;
+                lowerLimit = startingAngle - currentAngle;
+                if (upperLimit > 110 && upperLimit < 130 || lowerLimit > 110 && lowerLimit < 130) {
                     std::cout << "is blade: " << p1.x << " " << p1.y << std::endl;
                     line(frame, Point(x1, y1), Point(x2, y2), Scalar(255, 0, 0), 1, LINE_AA);
                 }

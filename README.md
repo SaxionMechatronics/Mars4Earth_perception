@@ -2,9 +2,9 @@
 C++ code
 
 # to run code
-mkdir build && cd build
-cmake ..
-make
+mkdir build && cd build    
+cmake ..      
+make       
 
-#in order to run
+# in order to run      
 ./Detection

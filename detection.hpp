@@ -18,7 +18,6 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/calib3d.hpp>
 
-
 //Namespace decl.
 using namespace std; 
 using namespace cv;
@@ -32,6 +31,7 @@ class Detector
 
     //================ Public variables ================
     public:
+    VideoCapture cap;
     int apertureSize;
     int houghThreshold;
     int houghMinLength;
@@ -40,12 +40,12 @@ class Detector
 
     //================ Public functions ================
     public:
-
+    // capture the image from camera or video
+    int capture();
     //Turbine detector using houghlines
     void detect(Mat frame);
     //creates a rectangle around the given vectors
     Rect lines2boundingbox(Mat frame, vector<Vec4i> lines);
     //detects the blade of the wind turbine
     void blade(Mat frame, vector<Vec4i> lines);
-
 };

@@ -7,8 +7,8 @@
 */
 //class header
 #include "detection.hpp"
+#include <utility>
 //Namespace
-//using namespace std;
 using namespace cv;
 using namespace cv::xfeatures2d;
 
@@ -17,6 +17,46 @@ Detector::Detector() {
     houghThreshold = 50;
     houghMinLength = 100;
     houghMaxLineGap = 15;
+}
+
+int Detector::capture() {
+    // Declare the output variables
+    Mat frame;
+    //-------Video Feed-------//
+    std::cout << "start" << std::endl;
+    // open the default camera using default API
+    cap.open(0);
+    // OR advance usage: select any API backend
+//    int deviceID = 1;             // 0 = open default camera
+//    int apiID = cv::CAP_ANY;      // 0 = autodetect default API
+//    // open selected camera using selected API
+//    cap.open(deviceID, apiID);
+    // check if we succeeded
+    if (!cap.isOpened()) { // check if we succeeded
+        std::cout << "cannot open camera " << std::endl;
+        return -1;
+    }
+
+    for (;;) {
+        cap >> frame; // get a new frame from camera
+        // wait for a new frame from camera and store it into 'frame'
+        cap.read(frame);
+        // check if we succeeded
+        if (frame.empty()) {
+            std::cerr << "ERROR! blank frame grabbed\n";
+            break;
+        }
+        //Run the detector (detect houghlines)
+        detect(frame);
+        // Display image.
+        cv::imshow("Output", frame);
+        if (waitKey(5) >= 0)
+            break;
+    }
+    // Wait and Exit
+    waitKey(0);
+    return 0;
+
 }
 
 void Detector::detect(Mat frame) {
@@ -51,6 +91,7 @@ void Detector::detect(Mat frame) {
     HoughLinesP(cannyT, lines, 1, CV_PI / 360, houghThreshold, houghMinLength, houghMaxLineGap);
     for (auto &i : lines) {
         line(frame, Point(i[0], i[1]), Point(i[2], i[3]), Scalar(0, 0, 255), 2, LINE_AA);
+        std::cout << i << std::endl;
     }
     blade(frame, lines);
     Rect boundingBox = lines2boundingbox(frame, lines);
@@ -92,7 +133,7 @@ void Detector::blade(Mat frame, vector<Vec4i> lines) {
                 upperLimit = startingAngle + currentAngle;
                 lowerLimit = startingAngle - currentAngle;
                 if (upperLimit > 110 && upperLimit < 130 || lowerLimit > 110 && lowerLimit < 130) {
-                    std::cout << "is blade: " << p1.x << " " << p1.y << std::endl;
+                    std::cout << "Blade starts at: x: " << p1.x << " y: " << p1.y << std::endl;
                     line(frame, Point(x1, y1), Point(x2, y2), Scalar(255, 0, 0), 1, LINE_AA);
                 }
             }

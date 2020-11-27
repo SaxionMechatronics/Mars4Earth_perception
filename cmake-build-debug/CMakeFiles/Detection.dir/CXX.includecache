@@ -9,6 +9,8 @@
 /home/wytse/project/windturbine/detection.cpp
 detection.hpp
 /home/wytse/project/windturbine/detection.hpp
+utility
+-
 
 /home/wytse/project/windturbine/detection.hpp
 opencv2/core.hpp

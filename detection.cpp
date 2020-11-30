@@ -7,7 +7,6 @@
 */
 //class header
 #include "detection.hpp"
-#include <utility>
 //Namespace
 using namespace cv;
 using namespace cv::xfeatures2d;
@@ -36,7 +35,6 @@ int Detector::capture() {
         std::cout << "cannot open camera " << std::endl;
         return -1;
     }
-
     for (;;) {
         cap >> frame; // get a new frame from camera
         // wait for a new frame from camera and store it into 'frame'
@@ -48,6 +46,7 @@ int Detector::capture() {
         }
         //Run the detector (detect houghlines)
         detect(frame);
+        lineMemory(frame, lines);
         // Display image.
         cv::imshow("Output", frame);
         if (waitKey(5) >= 0)
@@ -91,7 +90,6 @@ void Detector::detect(Mat frame) {
     HoughLinesP(cannyT, lines, 1, CV_PI / 360, houghThreshold, houghMinLength, houghMaxLineGap);
     for (auto &i : lines) {
         line(frame, Point(i[0], i[1]), Point(i[2], i[3]), Scalar(0, 0, 255), 2, LINE_AA);
-        std::cout << i << std::endl;
     }
     blade(frame, lines);
     Rect boundingBox = lines2boundingbox(frame, lines);
@@ -184,4 +182,15 @@ Rect Detector::lines2boundingbox(Mat frame, vector<Vec4i> lines) {
     boundingBox.width = Xmax - Xmin;
     boundingBox.height = Ymax - Ymin;
     return boundingBox;
+}
+
+void Detector::lineMemory(Mat frame, vector<Vec4i> lines) {
+
+    for (const auto &i : lines) {
+        prev_lines.push_back(i);
+    }
+
+    for (auto &i : prev_lines) {
+        line(frame, Point(i[0], i[1]), Point(i[2], i[3]), Scalar(0, 255, 255), 2, LINE_AA);
+    }
 }

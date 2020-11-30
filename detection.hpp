@@ -37,6 +37,7 @@ class Detector
     int houghMinLength;
     int houghMaxLineGap;
     vector<Vec4i> lines;
+    vector<Vec4i> prev_lines;
 
     //================ Public functions ================
     public:
@@ -48,4 +49,6 @@ class Detector
     Rect lines2boundingbox(Mat frame, vector<Vec4i> lines);
     //detects the blade of the wind turbine
     void blade(Mat frame, vector<Vec4i> lines);
+    // Create a line memory (WIP)
+    void lineMemory(Mat frame, vector<Vec4i> lines);
 };

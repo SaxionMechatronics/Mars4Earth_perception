@@ -1,1 +1,0 @@
-/usr/bin/c++  -g   CMakeFiles/windturbine.dir/main.cpp.o  -o windturbine 

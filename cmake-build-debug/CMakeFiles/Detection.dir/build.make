@@ -54,19 +54,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /opt/clion-2020.2.3/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/135/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /opt/clion-2020.2.3/bin/cmake/linux/bin/cmake -E rm -f
+RM = /snap/clion/135/bin/cmake/linux/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/wytse/CLionProjects/windturbine
+CMAKE_SOURCE_DIR = /home/wytse/project/windturbine
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/wytse/CLionProjects/windturbine/cmake-build-debug
+CMAKE_BINARY_DIR = /home/wytse/project/windturbine/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Detection.dir/depend.make
@@ -79,29 +79,29 @@ include CMakeFiles/Detection.dir/flags.make
 
 CMakeFiles/Detection.dir/main.cpp.o: CMakeFiles/Detection.dir/flags.make
 CMakeFiles/Detection.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/wytse/CLionProjects/windturbine/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Detection.dir/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Detection.dir/main.cpp.o -c /home/wytse/CLionProjects/windturbine/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/wytse/project/windturbine/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Detection.dir/main.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Detection.dir/main.cpp.o -c /home/wytse/project/windturbine/main.cpp
 
 CMakeFiles/Detection.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Detection.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/wytse/CLionProjects/windturbine/main.cpp > CMakeFiles/Detection.dir/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/wytse/project/windturbine/main.cpp > CMakeFiles/Detection.dir/main.cpp.i
 
 CMakeFiles/Detection.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Detection.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/wytse/CLionProjects/windturbine/main.cpp -o CMakeFiles/Detection.dir/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/wytse/project/windturbine/main.cpp -o CMakeFiles/Detection.dir/main.cpp.s
 
 CMakeFiles/Detection.dir/detection.cpp.o: CMakeFiles/Detection.dir/flags.make
 CMakeFiles/Detection.dir/detection.cpp.o: ../detection.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/wytse/CLionProjects/windturbine/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Detection.dir/detection.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Detection.dir/detection.cpp.o -c /home/wytse/CLionProjects/windturbine/detection.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/wytse/project/windturbine/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Detection.dir/detection.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Detection.dir/detection.cpp.o -c /home/wytse/project/windturbine/detection.cpp
 
 CMakeFiles/Detection.dir/detection.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Detection.dir/detection.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/wytse/CLionProjects/windturbine/detection.cpp > CMakeFiles/Detection.dir/detection.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/wytse/project/windturbine/detection.cpp > CMakeFiles/Detection.dir/detection.cpp.i
 
 CMakeFiles/Detection.dir/detection.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Detection.dir/detection.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/wytse/CLionProjects/windturbine/detection.cpp -o CMakeFiles/Detection.dir/detection.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/wytse/project/windturbine/detection.cpp -o CMakeFiles/Detection.dir/detection.cpp.s
 
 # Object files for target Detection
 Detection_OBJECTS = \
@@ -166,7 +166,7 @@ Detection: /usr/local/lib/libopencv_photo.so.4.5.0
 Detection: /usr/local/lib/libopencv_imgproc.so.4.5.0
 Detection: /usr/local/lib/libopencv_core.so.4.5.0
 Detection: CMakeFiles/Detection.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/wytse/CLionProjects/windturbine/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable Detection"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/wytse/project/windturbine/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable Detection"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Detection.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -179,6 +179,6 @@ CMakeFiles/Detection.dir/clean:
 .PHONY : CMakeFiles/Detection.dir/clean
 
 CMakeFiles/Detection.dir/depend:
-	cd /home/wytse/CLionProjects/windturbine/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/wytse/CLionProjects/windturbine /home/wytse/CLionProjects/windturbine /home/wytse/CLionProjects/windturbine/cmake-build-debug /home/wytse/CLionProjects/windturbine/cmake-build-debug /home/wytse/CLionProjects/windturbine/cmake-build-debug/CMakeFiles/Detection.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/wytse/project/windturbine/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/wytse/project/windturbine /home/wytse/project/windturbine /home/wytse/project/windturbine/cmake-build-debug /home/wytse/project/windturbine/cmake-build-debug /home/wytse/project/windturbine/cmake-build-debug/CMakeFiles/Detection.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/Detection.dir/depend
 

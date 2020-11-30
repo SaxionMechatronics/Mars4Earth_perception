@@ -1,4 +1,4 @@
-/opt/clion-2020.2.3/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/wytse/CLionProjects/windturbine
+/snap/clion/135/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/wytse/project/windturbine
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/wytse/CLionProjects/windturbine/cmake-build-debug
+-- Build files have been written to: /home/wytse/project/windturbine/cmake-build-debug

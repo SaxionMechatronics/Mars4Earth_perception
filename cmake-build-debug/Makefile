@@ -59,19 +59,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /opt/clion-2020.2.3/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/135/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /opt/clion-2020.2.3/bin/cmake/linux/bin/cmake -E rm -f
+RM = /snap/clion/135/bin/cmake/linux/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/wytse/CLionProjects/windturbine
+CMAKE_SOURCE_DIR = /home/wytse/project/windturbine
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/wytse/CLionProjects/windturbine/cmake-build-debug
+CMAKE_BINARY_DIR = /home/wytse/project/windturbine/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -79,7 +79,7 @@ CMAKE_BINARY_DIR = /home/wytse/CLionProjects/windturbine/cmake-build-debug
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/opt/clion-2020.2.3/bin/cmake/linux/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/snap/clion/135/bin/cmake/linux/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -90,7 +90,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/opt/clion-2020.2.3/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/snap/clion/135/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -100,9 +100,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/wytse/CLionProjects/windturbine/cmake-build-debug/CMakeFiles /home/wytse/CLionProjects/windturbine/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wytse/project/windturbine/cmake-build-debug/CMakeFiles /home/wytse/project/windturbine/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/wytse/CLionProjects/windturbine/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wytse/project/windturbine/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -131,17 +131,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Detection
+# Target rules for targets named main
 
 # Build rule for target.
-Detection: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Detection
-.PHONY : Detection
+main: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 main
+.PHONY : main
 
 # fast build rule for target.
-Detection/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Detection.dir/build.make CMakeFiles/Detection.dir/build
-.PHONY : Detection/fast
+main/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
+.PHONY : main/fast
 
 detection.o: detection.cpp.o
 
@@ -149,7 +149,7 @@ detection.o: detection.cpp.o
 
 # target to build an object file
 detection.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Detection.dir/build.make CMakeFiles/Detection.dir/detection.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/detection.cpp.o
 .PHONY : detection.cpp.o
 
 detection.i: detection.cpp.i
@@ -158,7 +158,7 @@ detection.i: detection.cpp.i
 
 # target to preprocess a source file
 detection.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Detection.dir/build.make CMakeFiles/Detection.dir/detection.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/detection.cpp.i
 .PHONY : detection.cpp.i
 
 detection.s: detection.cpp.s
@@ -167,7 +167,7 @@ detection.s: detection.cpp.s
 
 # target to generate assembly for a file
 detection.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Detection.dir/build.make CMakeFiles/Detection.dir/detection.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/detection.cpp.s
 .PHONY : detection.cpp.s
 
 main.o: main.cpp.o
@@ -176,7 +176,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Detection.dir/build.make CMakeFiles/Detection.dir/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -185,7 +185,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Detection.dir/build.make CMakeFiles/Detection.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -194,7 +194,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Detection.dir/build.make CMakeFiles/Detection.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -205,7 +205,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... Detection"
+	@echo "... main"
 	@echo "... detection.o"
 	@echo "... detection.i"
 	@echo "... detection.s"

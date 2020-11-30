@@ -6,11 +6,13 @@
 
 #IncludeRegexTransform: 
 
-/home/wytse/CLionProjects/windturbine/detection.cpp
+/home/wytse/project/windturbine/detection.cpp
 detection.hpp
-/home/wytse/CLionProjects/windturbine/detection.hpp
+/home/wytse/project/windturbine/detection.hpp
+utility
+-
 
-/home/wytse/CLionProjects/windturbine/detection.hpp
+/home/wytse/project/windturbine/detection.hpp
 opencv2/core.hpp
 -
 opencv2/videoio.hpp

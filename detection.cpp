@@ -6,6 +6,7 @@
   @date     05-11-2020
 */
 //class header
+#include <fstream>
 #include "detection.hpp"
 //Namespace
 using namespace cv;
@@ -22,9 +23,14 @@ int Detector::capture() {
     // Declare the output variables
     Mat frame;
     //-------Video Feed-------//
-    std::cout << "start" << std::endl;
+    //std::cout << "start" << std::endl;
     // open the default camera using default API
-    cap.open(0);
+    //cap.open(0);
+    VideoCapture cap("videos/mini3.mp4");
+    int width = CAP_PROP_FRAME_WIDTH;
+    int heigth = CAP_PROP_FRAME_HEIGHT;
+    char codex = cv::VideoWriter::fourcc('X','V','I','D');
+    VideoWriter video("output.avi", cv::VideoWriter::fourcc('M','J','P','G'), 30,Size(640, 480));
     // OR advance usage: select any API backend
 //    int deviceID = 1;             // 0 = open default camera
 //    int apiID = cv::CAP_ANY;      // 0 = autodetect default API
@@ -36,9 +42,10 @@ int Detector::capture() {
         return -1;
     }
     for (;;) {
-        cap >> frame; // get a new frame from camera
+        //cap >> frame; // get a new frame from camera
         // wait for a new frame from camera and store it into 'frame'
         cap.read(frame);
+        fps = cap.get(CAP_PROP_POS_FRAMES); // retrieves the current frame number
         // check if we succeeded
         if (frame.empty()) {
             std::cerr << "ERROR! blank frame grabbed\n";
@@ -46,9 +53,11 @@ int Detector::capture() {
         }
         //Run the detector (detect houghlines)
         detect(frame);
-        lineMemory(frame, lines);
+        //lineMemory(frame, lines);
         // Display image.
         cv::imshow("Output", frame);
+        frame.resize(640,480);
+        video.write(frame);
         if (waitKey(5) >= 0)
             break;
     }
@@ -98,6 +107,9 @@ void Detector::detect(Mat frame) {
 
 void Detector::blade(Mat frame, vector<Vec4i> lines) {
     vector<int> angle;
+    int counter = 0;
+    angle.push_back(5);
+
     float x1, y1, x2, y2;
     for (auto l : lines) {
         x1 = l[0];
@@ -108,9 +120,10 @@ void Detector::blade(Mat frame, vector<Vec4i> lines) {
         Point p1, p2;
         p1 = Point(x1, y1);
         p2 = Point(x2, y2);
+        //counter += 1;
         //calculate angle in radian, if you need it in degrees just do angle * 180 / PI
-        angle.push_back(atan2(p1.y - p2.y, p1.x - p2.x) * 360 / CV_PI);
-        for (int &i : angle) {
+        angle.at(counter) = atan2(p1.y - p2.y, p1.x - p2.x) * 360 / CV_PI;
+        for (int i : angle) {
             if (i < 0) {
                 int holdy;
                 int holdx;
@@ -120,23 +133,32 @@ void Detector::blade(Mat frame, vector<Vec4i> lines) {
                 holdx = p1.x;
                 p1.x = p2.x;
                 p2.x = holdx;
-                i = atan2(p1.y - p2.y, p1.x - p2.x) * 360 / CV_PI;
+                angle.at(counter) = atan2(p1.y - p2.y, p1.x - p2.x) * 360 / CV_PI;
             }
+        }
+
+        outputData.open("output.txt", std::ios::app);
+        outputData << p1.x << "," << p1.y << "," << p2.x << "," << p1.y << "\n";
+        outputData.close();
+        if(fps <= 30){
+            std::cout << p1.x << "," << p1.y << "," << p2.x << "," << p1.y << std::endl;
         }
         for (size_t i = 0; i < angle.size(); i++) {
             int startingAngle;
             startingAngle = angle[i];
+
             for (int currentAngle : angle) {
                 int upperLimit, lowerLimit;
                 upperLimit = startingAngle + currentAngle;
                 lowerLimit = startingAngle - currentAngle;
                 if (upperLimit > 110 && upperLimit < 130 || lowerLimit > 110 && lowerLimit < 130) {
-                    std::cout << "Blade starts at: x: " << p1.x << " y: " << p1.y << std::endl;
+                    //std::cout << "Blade starts at: x: " << p1.x << " y: " << p1.y << std::endl;
                     line(frame, Point(x1, y1), Point(x2, y2), Scalar(255, 0, 0), 1, LINE_AA);
                 }
             }
         }
     }
+
 }
 
 Rect Detector::lines2boundingbox(Mat frame, vector<Vec4i> lines) {
@@ -185,12 +207,11 @@ Rect Detector::lines2boundingbox(Mat frame, vector<Vec4i> lines) {
 }
 
 void Detector::lineMemory(Mat frame, vector<Vec4i> lines) {
-
     for (const auto &i : lines) {
         prev_lines.push_back(i);
     }
-
     for (auto &i : prev_lines) {
         line(frame, Point(i[0], i[1]), Point(i[2], i[3]), Scalar(0, 255, 255), 2, LINE_AA);
     }
 }
+

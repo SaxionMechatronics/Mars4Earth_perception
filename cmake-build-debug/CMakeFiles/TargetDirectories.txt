@@ -1,3 +1,4 @@
 /home/wytse/project/windturbine/cmake-build-debug/CMakeFiles/rebuild_cache.dir
 /home/wytse/project/windturbine/cmake-build-debug/CMakeFiles/edit_cache.dir
 /home/wytse/project/windturbine/cmake-build-debug/CMakeFiles/main.dir
+/home/wytse/project/windturbine/cmake-build-debug/CMakeFiles/parsers.dir

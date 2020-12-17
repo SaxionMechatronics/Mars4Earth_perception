@@ -14,6 +14,7 @@
 #include <opencv2/features2d/features2d.hpp>
 #include <opencv2/xfeatures2d.hpp>
 #include <iostream>
+#include <fstream>
 #include <cstdio>
 #include <opencv2/opencv.hpp>
 #include <opencv2/calib3d.hpp>
@@ -36,8 +37,10 @@ class Detector
     int houghThreshold;
     int houghMinLength;
     int houghMaxLineGap;
+    int fps = 0;
     vector<Vec4i> lines;
     vector<Vec4i> prev_lines;
+    std::ofstream outputData;
 
     //================ Public functions ================
     public:
@@ -49,6 +52,6 @@ class Detector
     Rect lines2boundingbox(Mat frame, vector<Vec4i> lines);
     //detects the blade of the wind turbine
     void blade(Mat frame, vector<Vec4i> lines);
-    // Create a line memory (WIP)
+    // Create a line memory (WIP, does not work)
     void lineMemory(Mat frame, vector<Vec4i> lines);
 };

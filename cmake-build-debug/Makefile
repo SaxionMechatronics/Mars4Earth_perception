@@ -143,6 +143,19 @@ main/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
 .PHONY : main/fast
 
+#=============================================================================
+# Target rules for targets named parsers
+
+# Build rule for target.
+parsers: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 parsers
+.PHONY : parsers
+
+# fast build rule for target.
+parsers/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/parsers.dir/build.make CMakeFiles/parsers.dir/build
+.PHONY : parsers/fast
+
 detection.o: detection.cpp.o
 
 .PHONY : detection.o
@@ -150,6 +163,7 @@ detection.o: detection.cpp.o
 # target to build an object file
 detection.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/detection.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/parsers.dir/build.make CMakeFiles/parsers.dir/detection.cpp.o
 .PHONY : detection.cpp.o
 
 detection.i: detection.cpp.i
@@ -159,6 +173,7 @@ detection.i: detection.cpp.i
 # target to preprocess a source file
 detection.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/detection.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/parsers.dir/build.make CMakeFiles/parsers.dir/detection.cpp.i
 .PHONY : detection.cpp.i
 
 detection.s: detection.cpp.s
@@ -168,6 +183,7 @@ detection.s: detection.cpp.s
 # target to generate assembly for a file
 detection.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/detection.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/parsers.dir/build.make CMakeFiles/parsers.dir/detection.cpp.s
 .PHONY : detection.cpp.s
 
 main.o: main.cpp.o
@@ -177,6 +193,7 @@ main.o: main.cpp.o
 # target to build an object file
 main.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/parsers.dir/build.make CMakeFiles/parsers.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -186,6 +203,7 @@ main.i: main.cpp.i
 # target to preprocess a source file
 main.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/parsers.dir/build.make CMakeFiles/parsers.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -195,6 +213,7 @@ main.s: main.cpp.s
 # target to generate assembly for a file
 main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/parsers.dir/build.make CMakeFiles/parsers.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -206,6 +225,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... main"
+	@echo "... parsers"
 	@echo "... detection.o"
 	@echo "... detection.i"
 	@echo "... detection.s"

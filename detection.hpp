@@ -52,6 +52,4 @@ class Detector
     Rect lines2boundingbox(Mat frame, vector<Vec4i> lines);
     //detects the blade of the wind turbine
     void blade(Mat frame, vector<Vec4i> lines);
-    // Create a line memory (WIP, does not work)
-    void lineMemory(Mat frame, vector<Vec4i> lines);
 };

@@ -22,15 +22,33 @@ Detector::Detector() {
 int Detector::capture() {
     // Declare the output variables
     Mat frame;
+    /*
+    // Loads an image //
+    frame = imread( "images/20.jpg", IMREAD_COLOR );
+    // Check if image is loaded fine
+    if(frame.empty()){
+        printf(" Error opening image\n");
+        return -1;
+    }*/
+
+    /*
+   // manual video //
+   VideoCapture cap("videos/1.mp4"); // open the default camera
+   if(!cap.isOpened()) { // check if we succeeded
+       std::cout << "cannot open camera "<< std::endl;
+       return -1;
+   }
+
+   -- GRAB AND WRITE LOOP
+   std::cout << "Start grabbing" << std::endl
+             << "Press any key to terminate" << std::endl;
+   */
+
     //-------Video Feed-------//
-    //std::cout << "start" << std::endl;
     // open the default camera using default API
-    //cap.open(0);
-    VideoCapture cap("videos/mini3.mp4");
-    int width = CAP_PROP_FRAME_WIDTH;
-    int heigth = CAP_PROP_FRAME_HEIGHT;
-    char codex = cv::VideoWriter::fourcc('X','V','I','D');
-    VideoWriter video("output.avi", cv::VideoWriter::fourcc('M','J','P','G'), 30,Size(640, 480));
+    cap.open(0);
+    /// if you want to display videos
+    // VideoCapture cap("videos/mini3.mp4");
     // OR advance usage: select any API backend
 //    int deviceID = 1;             // 0 = open default camera
 //    int apiID = cv::CAP_ANY;      // 0 = autodetect default API
@@ -53,18 +71,14 @@ int Detector::capture() {
         }
         //Run the detector (detect houghlines)
         detect(frame);
-        //lineMemory(frame, lines);
         // Display image.
         cv::imshow("Output", frame);
-        frame.resize(640,480);
-        video.write(frame);
         if (waitKey(5) >= 0)
             break;
     }
     // Wait and Exit
     waitKey(0);
     return 0;
-
 }
 
 void Detector::detect(Mat frame) {
@@ -123,6 +137,7 @@ void Detector::blade(Mat frame, vector<Vec4i> lines) {
         //counter += 1;
         //calculate angle in radian, if you need it in degrees just do angle * 180 / PI
         angle.at(counter) = atan2(p1.y - p2.y, p1.x - p2.x) * 360 / CV_PI;
+        //check if angle isn't negative, if so change x,y points
         for (int i : angle) {
             if (i < 0) {
                 int holdy;
@@ -138,11 +153,12 @@ void Detector::blade(Mat frame, vector<Vec4i> lines) {
         }
 
         outputData.open("output.txt", std::ios::app);
-        outputData << p1.x << "," << p1.y << "," << p2.x << "," << p1.y << "\n";
+        outputData << p1.x << "," << p1.y << "," << p2.x << "," << p2.y << "\n";
         outputData.close();
-        if(fps <= 30){
-            std::cout << p1.x << "," << p1.y << "," << p2.x << "," << p1.y << std::endl;
-        }
+        // for testing purposes.
+//        if(fps <= 30){
+//            std::cout << p1.x << "," << p1.y << "," << p2.x << "," << p2.y << std::endl;
+//        }
         for (size_t i = 0; i < angle.size(); i++) {
             int startingAngle;
             startingAngle = angle[i];
@@ -204,14 +220,5 @@ Rect Detector::lines2boundingbox(Mat frame, vector<Vec4i> lines) {
     boundingBox.width = Xmax - Xmin;
     boundingBox.height = Ymax - Ymin;
     return boundingBox;
-}
-
-void Detector::lineMemory(Mat frame, vector<Vec4i> lines) {
-    for (const auto &i : lines) {
-        prev_lines.push_back(i);
-    }
-    for (auto &i : prev_lines) {
-        line(frame, Point(i[0], i[1]), Point(i[2], i[3]), Scalar(0, 255, 255), 2, LINE_AA);
-    }
 }
 

@@ -22,17 +22,7 @@ Detector::Detector() {
 int Detector::capture() {
     // Declare the output variables
     Mat frame;
-    /*
-    // Loads an image //
-    frame = imread( "images/20.jpg", IMREAD_COLOR );
-    // Check if image is loaded fine
-    if(frame.empty()){
-        printf(" Error opening image\n");
-        return -1;
-    }*/
-
-    /*
-   // manual video //
+   /// manual video change the name of the video you want to show here ///
    VideoCapture cap("videos/1.mp4"); // open the default camera
    if(!cap.isOpened()) { // check if we succeeded
        std::cout << "cannot open camera "<< std::endl;
@@ -42,23 +32,7 @@ int Detector::capture() {
    -- GRAB AND WRITE LOOP
    std::cout << "Start grabbing" << std::endl
              << "Press any key to terminate" << std::endl;
-   */
-
-    //-------Video Feed-------//
-    // open the default camera using default API
-    cap.open(0);
-    /// if you want to display videos
-    // VideoCapture cap("videos/mini3.mp4");
-    // OR advance usage: select any API backend
-//    int deviceID = 1;             // 0 = open default camera
-//    int apiID = cv::CAP_ANY;      // 0 = autodetect default API
-//    // open selected camera using selected API
-//    cap.open(deviceID, apiID);
-    // check if we succeeded
-    if (!cap.isOpened()) { // check if we succeeded
-        std::cout << "cannot open camera " << std::endl;
-        return -1;
-    }
+			 
     for (;;) {
         //cap >> frame; // get a new frame from camera
         // wait for a new frame from camera and store it into 'frame'

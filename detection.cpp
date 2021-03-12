@@ -22,63 +22,13 @@ Detector::Detector() {
 int Detector::capture() {
     // Declare the output variables
     Mat frame;
-    /*
     // Loads an image //
-    frame = imread( "images/20.jpg", IMREAD_COLOR );
+    frame = imread( "images/1.jpg", IMREAD_COLOR );
     // Check if image is loaded fine
     if(frame.empty()){
         printf(" Error opening image\n");
         return -1;
-    }*/
-
-    /*
-   // manual video //
-   VideoCapture cap("videos/1.mp4"); // open the default camera
-   if(!cap.isOpened()) { // check if we succeeded
-       std::cout << "cannot open camera "<< std::endl;
-       return -1;
-   }
-
-   -- GRAB AND WRITE LOOP
-   std::cout << "Start grabbing" << std::endl
-             << "Press any key to terminate" << std::endl;
-   */
-
-    //-------Video Feed-------//
-    // open the default camera using default API
-    cap.open(0);
-    /// if you want to display videos
-    // VideoCapture cap("videos/mini3.mp4");
-    // OR advance usage: select any API backend
-//    int deviceID = 1;             // 0 = open default camera
-//    int apiID = cv::CAP_ANY;      // 0 = autodetect default API
-//    // open selected camera using selected API
-//    cap.open(deviceID, apiID);
-    // check if we succeeded
-    if (!cap.isOpened()) { // check if we succeeded
-        std::cout << "cannot open camera " << std::endl;
-        return -1;
-    }
-    for (;;) {
-        //cap >> frame; // get a new frame from camera
-        // wait for a new frame from camera and store it into 'frame'
-        cap.read(frame);
-        fps = cap.get(CAP_PROP_POS_FRAMES); // retrieves the current frame number
-        // check if we succeeded
-        if (frame.empty()) {
-            std::cerr << "ERROR! blank frame grabbed\n";
-            break;
-        }
-        //Run the detector (detect houghlines)
-        detect(frame);
-        // Display image.
-        cv::imshow("Output", frame);
-        if (waitKey(5) >= 0)
-            break;
-    }
-    // Wait and Exit
-    waitKey(0);
-    return 0;
+    }  
 }
 
 void Detector::detect(Mat frame) {
@@ -92,13 +42,13 @@ void Detector::detect(Mat frame) {
     // Detect the object based on HSV Range Values
     inRange(HSV, Scalar(low_H, low_S, low_V), Scalar(high_H, high_S, high_V), mask);
     // segment out the background
-    bitwise_or(frame, frame, HSVmasked, mask = mask);
-    cv::imshow("HSV_filter", HSVmasked);
+    //bitwise_or(frame, frame, HSVmasked, mask = mask);
+    //cv::imshow("HSV_filter", HSVmasked);
     //-------Canny----------//
     Mat cannyT, gBlur, mBlur;
-    GaussianBlur(HSVmasked, gBlur, Size(5, 5), 5);
+    GaussianBlur(frame, gBlur, Size(5, 5), 5);
     medianBlur(gBlur, mBlur, 7);
-    imshow("Gaussian & median blur", mBlur);
+    //imshow("Gaussian & median blur", mBlur);
     Canny(mBlur, cannyT, 50, 100, apertureSize, true);
     imshow("Canny", cannyT);
     //-------Hough lines----------//

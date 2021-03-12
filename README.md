@@ -14,4 +14,5 @@ Cmake 3.13 or higher
 - mkdir build && cd build
 - cmake ..
 - make
+- (the video folder in cmake-build-debug should be copied to the build folder )
 - ./main

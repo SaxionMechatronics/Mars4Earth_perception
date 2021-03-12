@@ -29,7 +29,7 @@ int Detector::capture() {
        return -1;
    }
 
-   -- GRAB AND WRITE LOOP
+   // -- GRAB AND WRITE LOOP
    std::cout << "Start grabbing" << std::endl
              << "Press any key to terminate" << std::endl;
 			 
@@ -66,13 +66,13 @@ void Detector::detect(Mat frame) {
     // Detect the object based on HSV Range Values
     inRange(HSV, Scalar(low_H, low_S, low_V), Scalar(high_H, high_S, high_V), mask);
     // segment out the background
-    bitwise_or(frame, frame, HSVmasked, mask = mask);
-    cv::imshow("HSV_filter", HSVmasked);
+    //bitwise_or(frame, frame, HSVmasked, mask = mask);
+    //cv::imshow("HSV_filter", HSVmasked);
     //-------Canny----------//
     Mat cannyT, gBlur, mBlur;
-    GaussianBlur(HSVmasked, gBlur, Size(5, 5), 5);
+    GaussianBlur(frame, gBlur, Size(5, 5), 5);
     medianBlur(gBlur, mBlur, 7);
-    imshow("Gaussian & median blur", mBlur);
+    //imshow("Gaussian & median blur", mBlur);
     Canny(mBlur, cannyT, 50, 100, apertureSize, true);
     imshow("Canny", cannyT);
     //-------Hough lines----------//
